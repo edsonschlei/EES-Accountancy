@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<servlet>
+		<servlet-name>MainAccountancyServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.MainAccountancyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MainAccountancyServlet</servlet-name>
+		<url-pattern>/main-accountancy-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreateUserDataEntriesFilterServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.CreateUserDataEntriesFilterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserDataEntriesFilterServlet</servlet-name>
+		<url-pattern>/create-user-data-entries-filter-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreateUserDataEntryServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.CreateUserDataEntryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserDataEntryServlet</servlet-name>
+		<url-pattern>/create-user-data-entry-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreateUserDataAccountServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.CreateUserDataAccountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserDataAccountServlet</servlet-name>
+		<url-pattern>/create-user-data-account-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SaveEntryServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.SaveEntryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveEntryServlet</servlet-name>
+		<url-pattern>/save-entry-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SaveAccountServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.SaveAccountServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveAccountServlet</servlet-name>
+		<url-pattern>/save-account-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UserDataEntriesFilterCodeServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.UserDataEntriesFilterCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserDataEntriesFilterCodeServlet</servlet-name>
+		<url-pattern>/user-data-entries-filter-code-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetMonthsServlet</servlet-name>
+		<servlet-class>org.ees.accountancy.GetMonthsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetMonthsServlet</servlet-name>
+		<url-pattern>/get-months-servlet</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>main-accountancy-servlet</welcome-file>
+	</welcome-file-list>
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value/>
+  </init-param>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <url-pattern>/_ah/spi/*</url-pattern>
+ </servlet-mapping>
+</web-app>
