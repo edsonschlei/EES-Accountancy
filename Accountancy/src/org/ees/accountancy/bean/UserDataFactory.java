@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.ees.accountancy.data.Account;
 import org.ees.accountancy.data.Entry;
@@ -19,6 +21,8 @@ import org.ees.accountancy.data.Entry;
 import com.google.appengine.api.datastore.Entity;
 
 public class UserDataFactory {
+
+    private static final Logger logger = Logger.getLogger(UserDataFactory.class.getCanonicalName());
 
     private UserDataFactory() {
     }
@@ -163,7 +167,12 @@ public class UserDataFactory {
 		debit = currencyInstance.format(eValue.doubleValue());
 		balanceValue -= eValue.doubleValue();
 	    }
-
+	    if (accountEntity == null) {
+		String accountNotFound = cAccount.equals(code) ? dAccount : cAccount;
+		String msg = String.format("Account not found: %s", accountNotFound);
+		logger.log(Level.SEVERE, msg);
+		continue;
+	    }
 	    String accCode = Account.getCode(accountEntity);
 	    String accDesc = Account.getDescription(accountEntity);
 
