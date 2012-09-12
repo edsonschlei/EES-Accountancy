@@ -63,7 +63,7 @@ function changeDebit(form) {
     <table>
       <tr> 
         <td>Date:</td>
-        <td><input type="date" name="date" value="${userDataEntry.date}" /> </td>
+        <td><input type="text" name="date" value="${userDataEntry.date}" /> </td>
       </tr>
       <tr>
         <td>Value:</td> 
