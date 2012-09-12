@@ -31,6 +31,10 @@ public class UserDataFactory {
 	UserDataEntryBean bean = new UserDataEntryBean();
 	bean.setDate(getCurrentDate());
 	bean.setAccounts(getAccounts());
+	if (!bean.getAccounts().isEmpty()) {
+	    bean.setDebit(bean.getAccounts().get(0).getCode());
+	    bean.setCredit(bean.getAccounts().get(0).getCode());
+	}
 	System.out.println(bean);
 	return bean;
     }
