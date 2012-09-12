@@ -27,7 +27,7 @@ public class Entry {
 
     private Entry() {
     }
-    
+
     private static final String ID = "ID";
     private static final String DATE = "date";
     private static final String VALUE = "value";
@@ -39,6 +39,7 @@ public class Entry {
     /**
      * Create or update a new Entry. <br>
      * To update is necessary inform the id.
+     * 
      * @param user
      * @param id
      * @param date
@@ -49,9 +50,9 @@ public class Entry {
      * @param location
      * @return
      */
-    public static Entity createOrUpdate(String id, String date, double value,
-	    String credit, String debit, String description, String location) {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
+    public static Entity createOrUpdate(String id, String date, double value, String credit,
+	    String debit, String description, String location) {
+	NamespaceManager.set(Constants.NS_ACCOUNTANCY);
 	Entity eUser = ConnectedUser.getUser();
 	Entity entry = null;
 	if (id != null) {
@@ -80,7 +81,7 @@ public class Entry {
      * @return
      */
     private static Entity getSingleEntry(String id) {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
+	NamespaceManager.set(Constants.NS_ACCOUNTANCY);
 	Entity user = ConnectedUser.getUser();
 	Query query = new Query(Entities.ENTRIES.getTableName());
 	query.setAncestor(user.getKey());
@@ -100,11 +101,12 @@ public class Entry {
      * @return
      */
     public static List<Entity> getAll() {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
+	NamespaceManager.set(Constants.NS_ACCOUNTANCY);
 	Entity user = ConnectedUser.getUser();
 	Query query = new Query(Entities.ENTRIES.getTableName());
 	query.setAncestor(user.getKey());
-	query.addFilter(Entity.KEY_RESERVED_PROPERTY, Query.FilterOperator.GREATER_THAN, user.getKey());
+	query.addFilter(Entity.KEY_RESERVED_PROPERTY, Query.FilterOperator.GREATER_THAN,
+		user.getKey());
 	List<Entity> results = Util.getDatastoreServiceInstance().prepare(query)
 		.asList(FetchOptions.Builder.withDefaults());
 	return results;
@@ -120,6 +122,8 @@ public class Entry {
     }
 
     /**
+     * This is not the best way to filter records, next step is to filter the
+     * record using the query filter.
      * 
      * @param year
      * @param month
@@ -135,7 +139,7 @@ public class Entry {
 	SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
 
 	List<Entity> entities = new ArrayList<Entity>(results);
-	
+
 	for (Iterator<Entity> iter = entities.iterator(); iter.hasNext();) {
 	    Entity entity = (Entity) iter.next();
 	    Date date = Entry.getDate(entity);
@@ -154,27 +158,28 @@ public class Entry {
     }
 
     /**
-     * Return all entries that have Credit or Debit for the informed code. 
+     * Return all entries that have Credit or Debit for the informed code.
      * 
      * @param code
      * @return
      */
     public static List<Entity> getAll(String code) {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
+	NamespaceManager.set(Constants.NS_ACCOUNTANCY);
 	Entity user = ConnectedUser.getUser();
 	Query query = new Query(Entities.ENTRIES.getTableName());
 	query.setAncestor(user.getKey());
-	query.addFilter(Entity.KEY_RESERVED_PROPERTY, Query.FilterOperator.GREATER_THAN, user.getKey());
+	query.addFilter(Entity.KEY_RESERVED_PROPERTY, Query.FilterOperator.GREATER_THAN,
+		user.getKey());
 
-//	CompositeFilter or = CompositeFilterOperator.or(
-//	         FilterOperator.EQUAL.of(CREDIT, code),
-//	         FilterOperator.EQUAL.of(DEBIT, code));
-//	         
-//	query.setFilter(or);
+	// CompositeFilter or = CompositeFilterOperator.or(
+	// FilterOperator.EQUAL.of(CREDIT, code),
+	// FilterOperator.EQUAL.of(DEBIT, code));
+	//
+	// query.setFilter(or);
 
 	List<Entity> results = Util.getDatastoreServiceInstance().prepare(query)
 		.asList(FetchOptions.Builder.withDefaults());
-	
+
 	List<Entity> filteredList = new ArrayList<Entity>(results);
 	for (Iterator<Entity> iter = filteredList.iterator(); iter.hasNext();) {
 	    Entity entity = (Entity) iter.next();
@@ -184,9 +189,9 @@ public class Entry {
 		iter.remove();
 	    }
 	}
-	
+
 	System.out.println(filteredList);
-	
+
 	return filteredList;
     }
 
@@ -201,7 +206,5 @@ public class Entry {
     public static Double getValue(Entity entity) {
 	return (Double) entity.getProperty(VALUE);
     }
-    
-    
-    
+
 }

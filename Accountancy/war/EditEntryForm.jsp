@@ -36,21 +36,19 @@ function changeDebit(form) {
 </script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=${browser_size.width}" />
+
 <title>Accountancy</title>
 </head>
 <body>
-<div>
-  This software is developed as a study case using several technologies available to develop an APP 
-  for the Google App Engine.<br />  
-  List of technologies used: JSP, JavaScrip, html, css, Servlet, AJAX, JSON.
-</div>
 <table>
 <tr> <td>
 <table width="100%">
   <tr>
     <th align="left">
       <a href="create-user-data-account-servlet"> New Account </a> &#160;&#160;&#160;
-      <a href="create-user-data-entries-filter-servlet"> Show Entries</a>
+      <a href="create-user-data-entries-filter-servlet"> Show Entries</a>  &#160;&#160;&#160;
+      <a href="/about.html"> About </a>
     </th>
   </tr>
 </table>

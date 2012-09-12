@@ -80,7 +80,9 @@ function showResponseText(request, resultRegion, transformResponseText) {
 
 function whenResponseOkExecuteThis(request, executeThis) {
 	if ((request.readyState == 4) && (request.status == 200)) {
-		executeThis(request);
+		if (executeThis) {
+			executeThis(request);
+		}
 	}
 }
 

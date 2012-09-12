@@ -124,7 +124,8 @@ public class UserDataFactory {
 	List<Entity> list = Entry.getAll(year, month, code);
 	Collections.sort(list, getComparatorByDate());
 
-	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	
 	NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
 
 	List<EntryBean> entryBeanList = new ArrayList<EntryBean>(list.size());
@@ -134,8 +135,8 @@ public class UserDataFactory {
 
 	    String accCode = Account.getCode(baseAccountEntity);
 	    String accDesc = Account.getDescription(baseAccountEntity);
-
-	    String date = "1." + month + "." + year;
+	    
+	    String date = "1/" + month + "/" + year;
 	    String account = accCode + "-" + accDesc;
 	    String credit = "";
 	    String debit = "";
