@@ -21,26 +21,15 @@
 <!--
 
 function changeCredit(form) {
-    for (var i = 0; i < form.creditBox.options.length; i++) {
-      if (form.creditBox.options[i].selected) {
-    	  form.credit.value = form.creditBox.options[i].value;
-      }
-    }
-  }
+    var option = form.creditBox.options[form.creditBox.selectedIndex]
+    form.credit.value = option.value;
+}
   
 function changeDebit(form) {
-    for (var i = 0; i < form.debitBox.options.length; i++) {
-      if (form.debitBox.options[i].selected) {
-    	  form.debit.value = form.debitBox.options[i].value;
-      }
-    }
-  }
+    var option = form.debitBox.options[form.debitBox.selectedIndex]
+ 	  form.debit.value = option.value;
+}
   
-// var selectmenu = document.getElementById("creditBox")
-// selectmenu.onchange = function() { //run some code when "onchange" event fires
-//   var chosenoption = this.options[this.selectedIndex] //this refers to "selectmenu"
-//   document.entryForm.credit.value = chosenoption.value
-// }
 
 -->
 
@@ -50,7 +39,11 @@ function changeDebit(form) {
 <title>Accountancy</title>
 </head>
 <body>
-
+<div>
+  This software is developed as a study case using several technologies available to develop an APP 
+  for the Google App Engine.<br />  
+  List of technologies used: JSP, JavaScrip, html, css, Servlet, AJAX, JSON.
+</div>
 <table>
 <tr> <td>
 <table width="100%">
@@ -70,7 +63,7 @@ function changeDebit(form) {
     <table>
       <tr> 
         <td>Date:</td>
-        <td><input type="text" name="date" value="${userDataEntry.date}" /> </td>
+        <td><input type="date" name="date" value="${userDataEntry.date}" /> </td>
       </tr>
       <tr>
         <td>Value:</td> 
@@ -82,7 +75,7 @@ function changeDebit(form) {
           <select id="creditBox"  onChange='changeCredit(this.form)'>
             <c:forEach var="account" items="${userDataEntry.accounts}">
               <c:choose>
-                <c:when test="${userDataEntry.credit}==${account}">
+                <c:when test="${userDataEntry.credit == account.code}">
                   <option value="${account.code}" selected="selected"> ${account.description} </option>
                 </c:when>
                 <c:otherwise>
@@ -91,7 +84,7 @@ function changeDebit(form) {
               </c:choose>
             </c:forEach>
            </select>
-           <input type="hidden" name="credit" value="${userDataEntry.accounts[0].code}"  />
+           <input type="hidden" name="credit" value="${userDataEntry.credit}"  />
         </td>
       </tr>
       <tr>
@@ -100,7 +93,7 @@ function changeDebit(form) {
           <select id="debitBox" onChange='changeDebit(this.form)'>
             <c:forEach var="account" items="${userDataEntry.accounts}">
               <c:choose>
-                <c:when test="${userDataEntry.debit}==${account}">
+                <c:when test="${userDataEntry.debit == account.code}">
                   <option value="${account.code}" selected="selected"> ${account.description} </option>
                 </c:when>
                 <c:otherwise>
@@ -109,7 +102,7 @@ function changeDebit(form) {
               </c:choose>
             </c:forEach>
           </select>
-          <input type="hidden" name="debit" value="${userDataEntry.accounts[0].code}"  />
+          <input type="hidden" name="debit" value="${userDataEntry.debit}"  />
         </td>
       </tr>
       <tr>

@@ -9,7 +9,7 @@ public class UserDataEntryBean implements Serializable {
 
     private String date = "";
     private String invalidDate = "";
-    private String value = "0";
+    private String value = "";
     private String invalidValue = "";
     private String debit = "";
     private String credit = "";
