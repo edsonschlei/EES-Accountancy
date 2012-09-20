@@ -18,6 +18,7 @@ import org.ees.accountancy.bean.UserDataFactory;
  * @author schlei
  *
  */
+@SuppressWarnings("serial")
 public class GetMonthsServlet extends HttpServlet {
 
     @Override
