@@ -27,6 +27,7 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 
 /**
@@ -106,7 +107,9 @@ public class Util {
 	logger.log(Level.INFO, "Search entities based on search criteria");
 	Query q = new Query(kind);
 	if (searchFor != null && !"".equals(searchFor)) {
-	    q.addFilter(searchBy, FilterOperator.EQUAL, searchFor);
+	    Filter filter = new Query.FilterPredicate(searchBy, FilterOperator.EQUAL, searchFor);
+	    q.setFilter(filter);
+	    //	    q.addFilter(searchBy, FilterOperator.EQUAL, searchFor);
 	}
 	PreparedQuery pq = datastore.prepare(q);
 	return pq.asIterable();
@@ -123,7 +126,9 @@ public class Util {
 	logger.log(Level.INFO, "Search entities based on parent");
 	Query q = new Query(kind);
 	q.setAncestor(ancestor);
-	q.addFilter(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
+	Filter filter = new Query.FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
+	q.setFilter(filter);
+	//	q.addFilter(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
 	PreparedQuery pq = datastore.prepare(q);
 	return pq.asIterable();
     }
@@ -138,7 +143,9 @@ public class Util {
 	logger.log(Level.INFO, "Search entities based on parent");
 	Query q = new Query(kind);
 	q.setAncestor(ancestor).setKeysOnly();
-	q.addFilter(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
+	Filter filter = new Query.FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
+	q.setFilter(filter);
+	//	q.addFilter(Entity.KEY_RESERVED_PROPERTY, FilterOperator.GREATER_THAN, ancestor);
 	PreparedQuery pq = datastore.prepare(q);
 	return pq.asIterable();
     }
