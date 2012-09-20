@@ -2,10 +2,11 @@ package org.ees.accountancy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,8 +31,8 @@ public class SaveEntryServlet extends HttpServlet {
 	resp.setContentType("text/html");
 	PrintWriter out = resp.getWriter();
 	
-	Map map = req.getParameterMap();
-	Set keySet = map.keySet();
+	Map<?,?> map = req.getParameterMap();
+	Set<?> keySet = map.keySet();
 	for (Object key : keySet) {
 	    Object value = req.getParameter(key.toString());
 	    out.println(key + " - " + value + "<br>");
@@ -50,7 +51,8 @@ public class SaveEntryServlet extends HttpServlet {
 	bean.setInvalidMessages(new ArrayList<String>());
 	Date date = null;
 	try {
-	    date = DateFormat.getDateInstance(DateFormat.SHORT).parse(parDate);
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT);
+	    date = sdf.parse(parDate);
 	} catch (ParseException e) {
 	    bean.setInvalidDate(e.getLocalizedMessage());
 	}
