@@ -1,7 +1,10 @@
 package org.ees.accountancy;
 
 import java.io.IOException;
-import javax.servlet.http.*;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.ees.accountancy.data.ConnectedUser;
 import org.ees.accountancy.data.CreateInitialAccounts;
