@@ -1,4 +1,27 @@
-<!-- Indices written at Wed, 12 Sep 2012 22:48:39 CEST -->
+<!-- Indices written at Thu, 20 Sep 2012 17:54:27 CEST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 4 times in query history -->
+    <datastore-index kind="accounts" ancestor="true" source="auto">
+        <property name="code" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="entries" ancestor="true" source="auto">
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="entries" ancestor="true" source="auto">
+        <property name="debit_code" direction="asc"/>
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="entries" ancestor="true" source="auto">
+        <property name="credit_code" direction="asc"/>
+        <property name="date" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

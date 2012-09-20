@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 
 public class Account {
@@ -19,7 +19,7 @@ public class Account {
     public static Entity createOrUpdate(String code, String description) {
 	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
 	Entity eUser = ConnectedUser.getUser();
-	Entity account = getSingleAccount(code, eUser);
+	Entity account = getSingleAccount(code);
 	if (account == null) {
 	    account = new Entity(Entities.ACCOUNTS.getTableName(), eUser.getKey());
 	    account.setProperty(CODE, code);
@@ -35,17 +35,22 @@ public class Account {
 	return account;
     }
 
-    private static Entity getSingleAccount(String code, Entity user) {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
-	Query query = new Query(Entities.ACCOUNTS.getTableName());
-	query.setAncestor(user.getKey());
-	query.addFilter(CODE, FilterOperator.EQUAL, code);
-	PreparedQuery prepare = Util.getDatastoreServiceInstance().prepare(query);
-	List<Entity> list = prepare.asList(FetchOptions.Builder.withDefaults());
+    private static Entity getSingleAccount(String code) {
+	Filter filter = new Query.FilterPredicate(CODE, FilterOperator.EQUAL, code);
+	List<Entity> list = queryEntries(filter);
 	if (!list.isEmpty()) {
 	    return list.get(0);
 	}
 	return null;
+
+    }
+
+    private static Query createQuery() {
+	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
+	Entity user = ConnectedUser.getUser();
+	Query query = new Query(Entities.ACCOUNTS.getTableName());
+	query.setAncestor(user.getKey());
+	return query;
     }
 
     
@@ -70,16 +75,28 @@ public class Account {
      * @return
      */
     public static List<Entity> getAll() {
-	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
-	Entity user = ConnectedUser.getUser();
-	Query query = new Query(Entities.ACCOUNTS.getTableName());
-	query.setAncestor(user.getKey());
-	query.addFilter(Entity.KEY_RESERVED_PROPERTY, Query.FilterOperator.GREATER_THAN, user.getKey());
-	List<Entity> results = Util.getDatastoreServiceInstance().prepare(query)
-		.asList(FetchOptions.Builder.withDefaults());
-	return results;
+	return queryEntries(null);
     }
 
+    /**
+     * Return the records oF the Account entity applying the informed filter.
+     * 
+     * @param filter
+     * @return
+     */
+    private static List<Entity> queryEntries(Filter filter) {
+	Query query = createQuery();
+	if (filter != null) {
+	    query.setFilter(filter);
+	}
+	
+	query.addSort(CODE, Query.SortDirection.ASCENDING);
+
+	return Util.getDatastoreServiceInstance().prepare(query)
+		.asList(FetchOptions.Builder.withDefaults());
+    }
+
+    
     public static String getDescription(Entity entity) {
 	return (String) entity.getProperty(DESCRIPTION);
     }
@@ -90,8 +107,7 @@ public class Account {
 
     public static Entity getEntity(String code) {
 	NamespaceManager.set(Constants.NS_ACCOUNTANCY); 
-	Entity eUser = ConnectedUser.getUser();
-	Entity account = getSingleAccount(code, eUser);
+	Entity account = getSingleAccount(code);
 	return account;
     }
     

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,9 +48,9 @@ public class SaveEntryServlet extends HttpServlet {
 	    bean = UserDataFactory.getUserDataEntryBean();
 	}
 	bean.setInvalidMessages(new ArrayList<String>());
-	
+	Date date = null;
 	try {
-	    DateFormat.getDateInstance(DateFormat.SHORT).parse(parDate);
+	    date = DateFormat.getDateInstance(DateFormat.SHORT).parse(parDate);
 	} catch (ParseException e) {
 	    bean.setInvalidDate(e.getLocalizedMessage());
 	}
@@ -82,7 +83,7 @@ public class SaveEntryServlet extends HttpServlet {
 	} else {
 	    String id = null;
 	    double value = Double.parseDouble(parValue);
-	    Entry.createOrUpdate(id, parDate, value, parCredit, parDebit, parDescription, null);
+	    Entry.createOrUpdate(id, date.getTime(), value, parCredit, parDebit, parDescription, null);
 	    
 	    SavedFormBean savedForm = new SavedFormBean();
 	    savedForm.setForwardPage("create-user-data-entry-servlet");

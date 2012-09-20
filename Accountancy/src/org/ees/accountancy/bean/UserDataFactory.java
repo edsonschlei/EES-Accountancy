@@ -5,11 +5,11 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -68,7 +68,6 @@ public class UserDataFactory {
 
     private static void createYearMonth(UserDataEntriesFilterBean bean) {
 	List<Entity> all = Entry.getAll();
-	Collections.sort(all, getComparatorByDate());
 	SimpleDateFormat sdfMonthNum = new SimpleDateFormat("M");
 	SimpleDateFormat sdfMonthDesc = new SimpleDateFormat("MMMM");
 	SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
@@ -98,15 +97,6 @@ public class UserDataFactory {
 	bean.setMonths(monthMap);
     }
 
-    private static Comparator<Entity> getComparatorByDate() {
-	return new Comparator<Entity>() {
-	    public int compare(Entity o1, Entity o2) {
-		Date date1 = Entry.getDate(o1);
-		Date date2 = Entry.getDate(o2);
-		return date1.compareTo(date2);
-	    };
-	};
-    }
 
     /**
      * Return a bean with the EntryBean of the year, month and Account code
@@ -117,14 +107,13 @@ public class UserDataFactory {
      * @param code
      * @return
      */
-    public static UserDataEntriesFilteredBean getUserData(String year, String month, String code) {
+    public static UserDataEntriesFilteredBean getUserData(int year, int month, String code) {
 	System.out.println(year + " " + month + " " + code);
 	UserDataEntriesFilteredBean bean = new UserDataEntriesFilteredBean();
 
 	List<Entity> list = Entry.getAll(year, month, code);
-	Collections.sort(list, getComparatorByDate());
 
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT);
 	
 	NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
 

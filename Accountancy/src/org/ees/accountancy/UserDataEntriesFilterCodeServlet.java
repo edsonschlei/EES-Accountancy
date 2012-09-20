@@ -25,11 +25,14 @@ public class UserDataEntriesFilterCodeServlet extends HttpServlet {
 	resp.setHeader("Cache-Control", "no-cache");
 	resp.setHeader("Pragma", "no-cache");
 
-	String year = req.getParameter("year");
-	String month = req.getParameter("month");
-	String code = req.getParameter("code");
+	String parYear = req.getParameter("year");
+	String parMonth = req.getParameter("month");
+	String parCode = req.getParameter("code");
+	
+	int year = Integer.parseInt(parYear);
+	int month = Integer.parseInt(parMonth);
 
-	UserDataEntriesFilteredBean bean = UserDataFactory.getUserData(year, month, code);
+	UserDataEntriesFilteredBean bean = UserDataFactory.getUserData(year, month, parCode);
 
 	req.getSession().setAttribute("filtered", bean);
 
