@@ -1,0 +1,14 @@
+
+Objective of the Software 
+-------------------------
+
+It is a web based software of an accounting system. 
+
+
+Basic features
+--------------
+
+
+
+
+
