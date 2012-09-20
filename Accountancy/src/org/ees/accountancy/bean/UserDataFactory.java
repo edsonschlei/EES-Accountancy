@@ -1,9 +1,9 @@
 package org.ees.accountancy.bean;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +24,9 @@ public class UserDataFactory {
 
     private static final Logger logger = Logger.getLogger(UserDataFactory.class.getCanonicalName());
 
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT);
+
+    
     private UserDataFactory() {
     }
 
@@ -52,7 +55,7 @@ public class UserDataFactory {
     }
 
     private static String getCurrentDate() {
-	return DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
+	return SDF.format(new Date());
     }
 
     public static UserDataAccountBean getUserDataAccountBean() {
@@ -112,8 +115,6 @@ public class UserDataFactory {
 	UserDataEntriesFilteredBean bean = new UserDataEntriesFilteredBean();
 
 	List<Entity> list = Entry.getAll(year, month, code);
-
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT);
 	
 	NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
 
@@ -124,8 +125,12 @@ public class UserDataFactory {
 
 	    String accCode = Account.getCode(baseAccountEntity);
 	    String accDesc = Account.getDescription(baseAccountEntity);
+
+	    Calendar cal = Calendar.getInstance(Locale.ROOT);
+	    cal.setTimeInMillis(0);
+	    cal.set(year, month-1, 1, 0, 0, 0);
 	    
-	    String date = "1/" + month + "/" + year;
+	    String date = SDF.format(cal.getTime());
 	    String account = accCode + "-" + accDesc;
 	    String credit = "";
 	    String debit = "";
@@ -170,7 +175,7 @@ public class UserDataFactory {
 	    String accCode = Account.getCode(accountEntity);
 	    String accDesc = Account.getDescription(accountEntity);
 
-	    String date = dateFormat.format(edate);
+	    String date = SDF.format(edate);
 	    String account = accCode + "-" + accDesc;
 	    String balance = currencyInstance.format(balanceValue);
 
